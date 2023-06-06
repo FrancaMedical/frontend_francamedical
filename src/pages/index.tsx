@@ -1,7 +1,11 @@
-import Head from 'next/head'
-import Login from '../components/Login'
+import Head from "next/head";
+import Login from "./Login";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
+import QueryListPage from "./QueryList";
 
 export default function Home() {
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <>
       <Head>
@@ -10,7 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Login/>
+      {isAuthenticated ? <QueryListPage /> : <Login />}
     </>
-  )
+  );
 }

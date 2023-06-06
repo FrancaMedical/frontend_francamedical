@@ -19,3 +19,18 @@
     border-top-right-radius: 25px;
     box-shadow: 0 -25px 0 0 #F66969;
   }
+
+
+  .dot {
+    transition: transform 0.2s;
+  }
+
+  #darkModeToggle:checked + .dot {
+    transform: translateX(100%);
+  }
+  
+  .active {
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  
