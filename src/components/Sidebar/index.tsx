@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ThemeContext from "@/contexts/ThemeContext";
-import { MdAppRegistration, MdCalendarToday } from "react-icons/Md";
+import { MdAppRegistration, MdCalendarToday } from "react-icons/md";
 import { BiFileFind } from "react-icons/bi";
 import { IoMdSettings } from "react-icons/io";
 
