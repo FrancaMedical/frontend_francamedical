@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ContentMain from "../../ContentMain";
-import Input from "../../Form/Input";
 import Button from "../../Form/Button";
 import Select from "../../Form/Select";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Patient } from "@/app/models/Patient";
 import { usePatientService } from "@/app/services/patient.service";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -103,7 +101,6 @@ const Register = () => {
   const handleEspecialidadeChange = (event: any) => {
     setSelectedEspecialidade(event.target.value);
   };
-  console.log(selectedOption);
   return (
     <ContentMain showHeader={true} showButtonAdd={false} title="Cadastro">
       <div className="bg-blueLight dark:bg-dark3 min-h-screen pb-24 ">

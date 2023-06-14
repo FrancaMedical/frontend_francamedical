@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Calendar,
-  Views,
-  DateLocalizer,
-  momentLocalizer,
-} from "react-big-calendar";
+import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -12,7 +7,6 @@ import moment from "moment";
 import { useMemo } from "react";
 import ContentMain from "../../ContentMain";
 import { useConsultService } from "@/app/services/consult.service";
-import { Consult } from "@/app/models/Consult";
 
 type Eventos = {
   id?: string;
@@ -52,8 +46,6 @@ const Schedule = () => {
       }
     }, []);
   }
-
-  console.log(events);
 
   SetarEventos();
 

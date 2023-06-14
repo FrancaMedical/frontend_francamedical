@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ContentMain from "../../ContentMain";
-import Image from "next/image";
 import Modal from "react-modal";
-import Input from "../../Form/Input";
 import Button from "../../Form/Button";
-import Select from "../../Form/Select";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -91,8 +88,6 @@ const QueryList = () => {
     });
   };
 
-  console.log("Consults: ", consults);
-
   useEffect(() => {
     const fetchPatients = async () => {
       const patients = await servicePatient.GETALL();
@@ -151,7 +146,6 @@ const QueryList = () => {
     setValue("id", idConsult);
     setValue("paciente", patientId);
     setValue("medico", doctorId);
-    console.log("Data do edit: ", data);
     serviceConsult.PUT(data).then(() => {
       toast.success("Consulta atualizada com sucesso!", {
         position: "top-right",
@@ -173,8 +167,13 @@ const QueryList = () => {
   };
 
   function openModalRegister() {
+    setValue("nomePaciente", "");
+    setValue("nomeMedico", "");
+    setValue("especialidade", "");
+    setValue("descricao", "");
+    setValue("dataConsulta", "");
+    setValue("horario", "");
     setModalRegister(true);
-    setSelectedConsult({});
   }
 
   function openModalView(consult: ConsultProps | any) {
@@ -202,10 +201,7 @@ const QueryList = () => {
     setValue("descricao", consult.descricao);
     setValue("dataConsulta", consult.dataConsulta);
     setValue("horario", consult.horario);
-    console.log("Abriu o editar: ", consult);
   }
-
-  console.log("TESTANDO: ", selectedConsult?.descricao);
 
   function closeModalEdit() {
     setModalEdit(false);
@@ -218,6 +214,7 @@ const QueryList = () => {
   };
 
   const [saveConsult, setSaveConsult] = useState<string | any>();
+
   const openConfirmaDelete = (consult: Consult) => {
     setVisible(true);
     setSaveConsult(consult.id);
@@ -303,22 +300,22 @@ const QueryList = () => {
           contentLabel="Nova Consulta"
         >
           <div className="flex flex-col z-50">
-            <div className=" bg-blueMain w-full rounded-t-xl h-20 flex justify-start items-center">
+            <div className=" bg-blueMain dark:bg-dark3 w-full rounded-t-xl h-20 flex justify-start items-center">
               <h1 className="text-3xl ml-4 text-white">Nova Consulta</h1>
             </div>
 
-            <div className="bg-blueLight px-8 w-full pb-12">
+            <div className="bg-blueLight dark:bg-darkSecondary px-8 w-full pb-12">
               <form onSubmit={handleSubmit(handleRegister)}>
                 <div className={`mt-8`}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black dark:text-white text-xl`}
                       htmlFor={"nomePaciente"}
                     >
                       {"Nome Completo do Paciente"}
                     </label>
                     <input
-                      className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="dark:text-white mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:dark:text-white placeholder:text-lg text-black text-lg"
                       {...register("nomePaciente")}
                       name="nomePaciente"
                       id="nomePaciente"
@@ -332,13 +329,13 @@ const QueryList = () => {
                 <div className={``}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"nomeMedico"}
                     >
                       {"Nome Completo do Médico"}
                     </label>
                     <input
-                      className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="dark:text-white mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:dark:text-white placeholder:text-lg text-black text-lg"
                       {...register("nomeMedico")}
                       name="nomeMedico"
                       id="nomeMedico"
@@ -353,7 +350,7 @@ const QueryList = () => {
                   <div className="w-full">
                     <div className="w-full">
                       <div className={`flex flex-col`}>
-                        <label className="text-xl" htmlFor="">
+                        <label className="text-xl dark:text-white" htmlFor="">
                           Especialidade
                         </label>
                         <select
@@ -361,7 +358,7 @@ const QueryList = () => {
                           id="especialidade"
                           name="especialidade"
                           onChange={handleEspecialidadeChange}
-                          className={`focus:outline-none  w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg`}
+                          className={`focus:outline-none dark:text-white  w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg`}
                         >
                           <option value="pediatria">Pediatria</option>
                           <option value="cardiologia">Cardiologia</option>
@@ -374,13 +371,13 @@ const QueryList = () => {
                 <div className={`mt-8`}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"descricao"}
                     >
                       {"Descrição"}
                     </label>
                     <textarea
-                      className="focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:dark:text-white placeholder:text-lg text-black text-lg"
                       {...register("descricao")}
                       name="descricao"
                       id="descricao"
@@ -394,13 +391,13 @@ const QueryList = () => {
                     <div className={`mt-8`}>
                       <div className="">
                         <label
-                          className={`text-black text-xl`}
+                          className={`text-black text-xl dark:text-white`}
                           htmlFor={"dataConsulta"}
                         >
                           {"Data de Consulta"}
                         </label>
                         <input
-                          className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                          className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                           {...register("dataConsulta")}
                           name="dataConsulta"
                           id="dataConsulta"
@@ -415,13 +412,13 @@ const QueryList = () => {
                     <div className={`mt-8`}>
                       <div className="">
                         <label
-                          className={`text-black text-xl`}
+                          className={`text-black text-xl dark:text-white`}
                           htmlFor={"horario"}
                         >
                           {"Horário"}
                         </label>
                         <input
-                          className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                          className="dark:text-white mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                           {...register("horario")}
                           name="horario"
                           id="horario"
@@ -465,24 +462,24 @@ const QueryList = () => {
           contentLabel="Consulta X"
         >
           <div className="flex flex-col z-50">
-            <div className=" bg-blueMain w-full rounded-t-xl h-20 flex justify-start items-center">
+            <div className=" bg-blueMain dark:bg-dark3 w-full rounded-t-xl h-20 flex justify-start items-center">
               <h1 className="text-3xl ml-4 text-white">
                 Consulta {selectedConsult?.descricao}
               </h1>
             </div>
 
-            <div className="bg-blueLight px-8 w-full pb-12">
+            <div className="bg-blueLight dark:bg-darkSecondary px-8 w-full pb-12">
               <form onSubmit={handleSubmit(handleUpdate)}>
                 <div className={`mt-8`}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"nomePaciente"}
                     >
                       {"Nome Completo do Paciente"}
                     </label>
                     <input
-                      className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                       {...register("nomePaciente")}
                       name="nomePaciente"
                       id="nomePaciente"
@@ -495,13 +492,13 @@ const QueryList = () => {
                 <div className={``}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"nomeMedico"}
                     >
                       {"Nome Completo do Médico"}
                     </label>
                     <input
-                      className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                       {...register("nomeMedico")}
                       name="nomeMedico"
                       id="nomeMedico"
@@ -515,7 +512,7 @@ const QueryList = () => {
                   <div className="w-full">
                     <div className="w-full">
                       <div className={`flex flex-col`}>
-                        <label className="text-xl" htmlFor="">
+                        <label className="text-xl dark:text-white" htmlFor="">
                           Especialidade
                         </label>
                         <select
@@ -523,7 +520,7 @@ const QueryList = () => {
                           id="especialidade"
                           name="especialidade"
                           onChange={handleEspecialidadeChange}
-                          className={`focus:outline-none  w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg`}
+                          className={`focus:outline-none dark:text-white  w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg`}
                         >
                           <option
                             selected={
@@ -563,13 +560,13 @@ const QueryList = () => {
                 <div className={`mt-8`}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"descricao"}
                     >
                       {"Descrição"}
                     </label>
                     <textarea
-                      className="focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="focus:outline-none dark:text-white w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                       {...register("descricao")}
                       name="descricao"
                       id="descricao"
@@ -582,13 +579,13 @@ const QueryList = () => {
                     <div className={`mt-8`}>
                       <div className="">
                         <label
-                          className={`text-black text-xl`}
+                          className={`text-black text-xl dark:text-white`}
                           htmlFor={"dataConsulta"}
                         >
                           {"Data de Consulta"}
                         </label>
                         <input
-                          className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                          className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                           {...register("dataConsulta")}
                           name="dataConsulta"
                           id="dataConsulta"
@@ -602,13 +599,13 @@ const QueryList = () => {
                     <div className={`mt-8`}>
                       <div className="">
                         <label
-                          className={`text-black text-xl`}
+                          className={`text-black text-xl dark:text-white`}
                           htmlFor={"horario"}
                         >
                           {"Horário"}
                         </label>
                         <input
-                          className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                          className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                           {...register("horario")}
                           name="horario"
                           id="horario"
@@ -651,24 +648,24 @@ const QueryList = () => {
           contentLabel="Consulta X"
         >
           <div className="flex flex-col z-50">
-            <div className=" bg-blueMain w-full rounded-t-xl h-20 flex justify-start items-center">
+            <div className=" bg-blueMain dark:bg-dark3 w-full rounded-t-xl h-20 flex justify-start items-center">
               <h1 className="text-3xl ml-4 text-white">
                 Consulta {selectedConsult?.descricao}
               </h1>
             </div>
 
-            <div className="bg-blueLight px-8 w-full pb-12">
+            <div className="bg-blueLight dark:bg-darkSecondary px-8 w-full pb-12">
               <form onSubmit={handleSubmit(handleUpdate)}>
                 <div className={`mt-8`}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"nomePaciente"}
                     >
                       {"Nome Completo do Paciente"}
                     </label>
                     <input
-                      className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                       {...register("nomePaciente")}
                       name="nomePaciente"
                       id="nomePaciente"
@@ -682,13 +679,13 @@ const QueryList = () => {
                 <div className={``}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"nomeMedico"}
                     >
                       {"Nome Completo do Médico"}
                     </label>
                     <input
-                      className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                       {...register("nomeMedico")}
                       name="nomeMedico"
                       id="nomeMedico"
@@ -703,7 +700,7 @@ const QueryList = () => {
                   <div className="w-full">
                     <div className="w-full">
                       <div className={`flex flex-col`}>
-                        <label className="text-xl" htmlFor="">
+                        <label className="text-xl dark:text-white" htmlFor="">
                           Especialidade
                         </label>
                         <select
@@ -712,7 +709,7 @@ const QueryList = () => {
                           name="especialidade"
                           onChange={handleEspecialidadeChange}
                           disabled
-                          className={`focus:outline-none  w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg`}
+                          className={`focus:outline-none dark:text-white  w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg`}
                         >
                           <option
                             selected={
@@ -752,13 +749,13 @@ const QueryList = () => {
                 <div className={`mt-8`}>
                   <div className="">
                     <label
-                      className={`text-black text-xl`}
+                      className={`text-black text-xl dark:text-white`}
                       htmlFor={"descricao"}
                     >
                       {"Descrição"}
                     </label>
                     <textarea
-                      className="focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                      className="focus:outline-none dark:text-white w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                       {...register("descricao")}
                       name="descricao"
                       id="descricao"
@@ -772,13 +769,13 @@ const QueryList = () => {
                     <div className={`mt-8`}>
                       <div className="">
                         <label
-                          className={`text-black text-xl`}
+                          className={`text-black text-xl dark:text-white`}
                           htmlFor={"dataConsulta"}
                         >
                           {"Data de Consulta"}
                         </label>
                         <input
-                          className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                          className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                           {...register("dataConsulta")}
                           name="dataConsulta"
                           id="dataConsulta"
@@ -793,13 +790,13 @@ const QueryList = () => {
                     <div className={`mt-8`}>
                       <div className="">
                         <label
-                          className={`text-black text-xl`}
+                          className={`text-black text-xl dark:text-white`}
                           htmlFor={"horario"}
                         >
                           {"Horário"}
                         </label>
                         <input
-                          className="mb-8 focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
+                          className="mb-8 dark:text-white focus:outline-none w-full border border-solid border-blueMain rounded-xl p-4 mt-2  bg-blueInput bg-opacity-10 placeholder:text-black placeholder:text-lg text-black text-lg"
                           {...register("horario")}
                           name="horario"
                           id="horario"
